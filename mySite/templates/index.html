@@ -1,0 +1,71 @@
+{% load django_bootstrap5 %}
+
+<html>
+
+<head>
+    <meta charset='utf-8' />
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+</head>
+
+<body>
+    <!--　▼ container単体　 -->
+    <div class="container">
+        <!-- As a link -->
+        <nav class="navbar navbar-light bg-light">
+            <div class="container-fluid">
+            <a class="navbar-brand" href="#">AI株価予測</a>
+            </div>
+        </nav>
+
+        {% load static %}
+
+        <img src="{% static 'title_Image.png' %}" class="img-fluid" alt="">
+
+        <div class="mx-5 mt-4 mb-5">
+            <p class="text-end">更新日時:2023/02/01 12:00:00</p>
+            <table class="table table-light table-striped table-hover text-center">
+                <thead class="table-dark">
+                <tr>
+                    <th scope="col" style="vertical-align:middle">銘柄コード</th>
+                    <th scope="col" style="vertical-align:middle">会社名</th>
+                    <th scope="col">昨日の株価<br>(終値)</th>
+                    <th scope="col">本日の予測株価<br>(終値)</th>
+                    <th scope="col">来週の予測株価<br>(終値)</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for book in sample2 %}
+                <tr>
+                    <td>{{book.1}}</td>
+                    <td><a href=https://finance.yahoo.co.jp/quote/{{book.1}} class="link-primary">{{book.0}}</a></td>
+                    <td>{{book.2}}</td>
+                    
+                    {% if book.5 == "1" %}
+                    <td class="text-danger">{{book.3}} (+{{book.7}})</td>
+                    {% else %}
+                    <td class="text-primary">{{book.3}} ({{book.7}})</td>
+                    {% endif %}
+
+                    {% if book.6 == "1" %}
+                    <td class="text-danger">{{book.4}} (+{{book.8}})</td>
+                    {% else %}
+                    <td class="text-primary">{{book.4}} ({{book.8}})</td>                   
+                    {% endif %}
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <footer class="footer mt-4 py-3 bg-light">
+            <div class="text-center">
+              <span class="text-muted">Demo co., &copy; All Right Reserved.</span>
+            </div>
+         </footer>
+
+    </div>
+</body>
+
+</html>
+
